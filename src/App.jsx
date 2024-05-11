@@ -14,7 +14,7 @@ import { BookingsPage } from './Components/Pages/BookingsPage'
 import { BookingPage } from './Components/Pages/BookingPage'
 
 axios.defaults.baseURL = 'https://airbnb-api-sjve.onrender.com/';
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
 
 
