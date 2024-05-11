@@ -9,8 +9,17 @@ export const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [redirect, setRedirect] = useState(false);
   const {setUser} = useContext(UserContext);
+  
+  // This function handles the submission of login credentials.
   async function handleLoginSubmit(e) {
     e.preventDefault();
+
+      // Check if email and password are not empty
+  if (!email || !password) {
+    alert('Please enter both email and password');
+    return;
+  }
+
     try {
       const {data} = await axios.post('/login', {email,password});
       setUser(data);

@@ -6,16 +6,21 @@ import { PlaceGallery } from '../PlaceGallery';
 import { AddressLink } from '../AddressLink';
 
 export const PlacePage = () => {
-    const {id} = useParams();
-    const [place,setPlace] = useState(null);
+    const { id } = useParams();
+    const [place, setPlace] = useState(null);
    
     useEffect(() => {
-        if (!id) {
-            return;
+        try {
+            if (!id) {
+                return;
+            }
+            axios.get(`/places/${id}`).then(response => {
+                setPlace(response.data);
+            });
+        } catch (error) {
+            console.error('Error fetching place:', error);
+            // Handle error state here if needed
         }
-        axios.get(`/places/${id}`).then(response => {
-            setPlace(response.data);
-        });
     }, [id]);
 
     if (!place) return;

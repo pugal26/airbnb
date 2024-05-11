@@ -4,17 +4,19 @@ import { Link } from "react-router-dom";
 
 
 export const IndexPage = () => {
-  const [places,setPlaces] = useState([]);
+  const [places, setPlaces] = useState([]);
+
   useEffect(() => {
-    // Modify the URL to include the full address if needed
-    axios.get('/places')
-      .then(response => {
-        setPlaces(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
+    try {
+      axios.get('/places')
+        .then(response => {
+          setPlaces(response.data);
+        });
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   }, []);
+
   return (
     <div className="mt-8 grid gap-x-6 gap-y-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {places.length > 0 && places.map((place,index) => (

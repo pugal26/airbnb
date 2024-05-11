@@ -2,6 +2,7 @@ import React from 'react'
 
 export const Perks = ({selected,onChange}) => {
 
+    //checkbox functalities
     function handlecbclick(e) {
         const {checked,name} = e.target;
         if (checked) {

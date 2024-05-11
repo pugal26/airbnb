@@ -7,6 +7,8 @@ export const AccountNav = () => {
     if (subpage === undefined) {
         subpage = 'profile';
     }
+
+    // This function generates CSS classes for a link based on the specified type.
     function linkClasses (type=null) {
         let classes = 'inline-flex gap-2 py-2 px-6 rounded-full'
         if (type === subpage) {

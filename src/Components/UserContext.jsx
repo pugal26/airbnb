@@ -3,6 +3,7 @@ import {createContext,useEffect,useState} from "react";
 
 export const UserContext = createContext({});
 
+// This component provides context for the user data.
 export function UserContextProvider({children}) {
     const [user,setUser] = useState(null);
     const [ready,setReady] = useState(false);

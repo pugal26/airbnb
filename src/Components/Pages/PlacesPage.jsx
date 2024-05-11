@@ -6,11 +6,18 @@ import { PlaceImg } from '../PlaceImg';
 
 
 export const PlacesPage = () => {
-    const [places,setPlaces] = useState([]);
+    const [places, setPlaces] = useState([]);
+
     useEffect(() => {
-        axios.get('/user-places').then(({data}) => {
-            setPlaces(data);
-        });
+        try {
+            axios.get('/user-places')
+                .then(({ data }) => {
+                    setPlaces(data);
+                });
+        } catch (error) {
+            console.error('Error fetching user places:', error);
+            // Handle error state here if needed
+        }
     }, []);
     
   return ( 

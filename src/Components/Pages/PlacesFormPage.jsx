@@ -18,7 +18,9 @@ export const PlacesFormPage = () => {
     const [maxGuests,setMaxGuests] = useState(1);
     const [price,setPrice] = useState(100);
     const [redirect, setRedirect] = useState(false);
+
     useEffect(() => {
+        try {
         if (!id) {
             return;
         }
@@ -36,18 +38,27 @@ export const PlacesFormPage = () => {
                 setMaxGuests(data.maxGuests);
                 setPrice(data.price);
             });
-    }, [id])
+        } catch (error) {
+            console.error('Error fetching place:', error);
+            // Handle error state here if needed
+        }
+    }, [id]);
 
+    // This function generates a header element with the specified text.
     function inputHearder(text){
         return (
             <h2 className='text-xl mt-4'>{text}</h2>
         );
     }
+
+    // This function generates a description paragraph element with the specified text.
     function inputDescription(text) {
         return (
             <p className='text-gray-500 text-sm mt-2'>{text}</p>
         );
     }
+
+    // This function combines the inputHeader and inputDescription functions to display a header and description.
     function preInput(header,description) {
         return (
             <>
@@ -57,6 +68,7 @@ export const PlacesFormPage = () => {
         );
     }
 
+    // This function handles the submission of place data, either updating an existing place or creating a new one.
     async function savePlace(e) {
         e.preventDefault();
         const placeData = {title, address, addedPhotos, 

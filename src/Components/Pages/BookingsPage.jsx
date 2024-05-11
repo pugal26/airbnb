@@ -1,18 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { AccountNav } from '../AccountNav'
-import App from '../../App'
 import axios from 'axios';
 import { PlaceImg } from '../PlaceImg';
-import { differenceInCalendarDays, format } from 'date-fns';
 import { Link } from 'react-router-dom';
 import { BookingDates } from '../BookingDates';
 
 export const BookingsPage = () => {
-    const [bookings,setBookings] = useState([]);
+    const [bookings, setBookings] = useState([]);
+
     useEffect(() => {
-        axios.get('/bookings').then(response => {
-            setBookings(response.data);
-        });
+        try {
+            axios.get('/bookings')
+                .then(response => {
+                    setBookings(response.data);
+                })
+                .catch(error => {
+                    throw error;
+                });
+        } catch (error) {
+            console.error('Error fetching bookings:', error);
+            // Handle error state here if needed
+        }
     }, []);
 
   return (

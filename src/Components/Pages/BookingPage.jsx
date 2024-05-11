@@ -6,16 +6,26 @@ import { PlaceGallery } from '../PlaceGallery';
 import { BookingDates } from '../BookingDates';
 
 export const BookingPage = () => {
-    const {id} = useParams();
-    const [booking,setBooking] = useState(null);
+    const { id } = useParams();
+    const [booking, setBooking] = useState(null);
+
     useEffect(() => {
-        if (id) {
-            axios.get('/bookings').then(response => {
-                const foundBooking = response.data.find(({_id}) => _id === id);
-                if (foundBooking) {
-                    setBooking(foundBooking);
-                }
-            });
+        try {
+            if (id) {
+                axios.get('/bookings')
+                    .then(response => {
+                        const foundBooking = response.data.find(({ _id }) => _id === id);
+                        if (foundBooking) {
+                            setBooking(foundBooking);
+                        }
+                    })
+                    .catch(error => {
+                        throw error;
+                    });
+            }
+        } catch (error) {
+            console.error('Error fetching booking:', error);
+            // Handle error state here if needed
         }
     }, [id]);
 

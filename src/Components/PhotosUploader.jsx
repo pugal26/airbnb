@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 
 export const PhotosUploader = ({addedPhotos,onChange}) => {
     const [photoLink,setPhotoLink] = useState('');
+
+    // This function adds a photo by link to the list of photos.
     async function addPhotoByLink(e) {
         e.preventDefault();
         const {data:filename} = await axios.post('/upload-by-link', {link:photoLink});
@@ -11,25 +13,36 @@ export const PhotosUploader = ({addedPhotos,onChange}) => {
         });
         setPhotoLink('');
     }
+
+    // This function handles the upload of photos selected from the file input.
     function uploadPhoto(e) {
         const files = e.target.files;
         const data = new FormData();
         for (let i = 0; i < files.length; i++) {
-            data.append('photos',files[i]);
+            data.append('photos', files[i]);
         }
-        axios.post('/upload',data, {
-            headers: {'Content-Type':'multipart/from-data'}
-        }).then(response => {
-            const {data:filenames} = response;
-            onChange(prev => {
-                return [...prev, ...filenames];
+        try {
+            axios.post('/upload', data, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            }).then(response => {
+                const { data: filenames } = response;
+                onChange(prev => {
+                    return [...prev, ...filenames];
+                });
             });
-        })
+        } catch (error) {
+            console.error('Error during photo upload:', error);
+            // Handle error state here if needed
+        }
     }
+
+    // This function removes a photo from the list of added photos.
     function removePhoto(e,filename) {
         e.preventDefault();
         onChange([...addedPhotos.filter(photo => photo !== filename)]);
     }
+
+    // This function selects a photo as the main photo among the added photos.
     function selectAsMainPhoto(e,filename) {
         e.preventDefault();
         onChange([filename,...addedPhotos.filter(photo => photo !== filename)]);
