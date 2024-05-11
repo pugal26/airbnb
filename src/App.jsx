@@ -13,7 +13,7 @@ import { PlacePage } from './Components/Pages/PlacePage'
 import { BookingsPage } from './Components/Pages/BookingsPage'
 import { BookingPage } from './Components/Pages/BookingPage'
 
-axios.defaults.baseURL = 'http://localhost:4000';
+axios.defaults.baseURL = 'https://airbnb-api-sjve.onrender.com/';
 axios.defaults.withCredentials = true;
 
 
